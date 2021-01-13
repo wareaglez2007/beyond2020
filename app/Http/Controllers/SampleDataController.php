@@ -30,9 +30,11 @@ class SampleDataController extends Controller
         return view('seeders.addnewdevice');
     }
     //Add new Employees
-    public function AddEmployees()
+    public function AddEmployees(employees $employees)
     {
-        return view('seeders.addemployee');
+        $emp_count = $employees->count();
+        $employees_data = $employees->all();
+        return view('seeders.addemployee', ['emp_count'=> $emp_count,'employee_data' => $employees_data]);
     }
     //AJAX call to store the new employee seed
     public function AddEmployeesNewSeed(employees $employees, Request $request)
@@ -66,13 +68,14 @@ class SampleDataController extends Controller
         $employees->save();
         $success_message = "Employee " . request('name') . " has been added.";
 
-        if ($request->ajax()) {
 
-            return view('seeders.addemployee', ['success' => $success_message])->render();
-        }
+        //if ($request->ajax()) {
+
+          //  return view('seeders.addemployee', ['success' => $success_message])->render();
+        //}
 
 
-        //return response()->json(['success' => $success_message]);
+        return response()->json(['success' => $success_message]);
     }
 
     //ADD ROLES

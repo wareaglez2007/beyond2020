@@ -129,6 +129,44 @@
 
         </div>
     </div>
+    &nbsp;
+    @if ($emp_count > 0)
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Employee Data') }}</div>
+
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">SEID</th>
+                                <th scope="col">First</th>
+                                <th scope="col">Last</th>
+                                <th scope="col">Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach ($employee_data as $employee)
+                                <tr>
+                                    <th scope="row">{{ $employee->id }}</th>
+                                    <td>{{ $employee->seid }}</td>
+                                    <td>{{ $employee->name }}</td>
+                                    <td>{{ $employee->l_name }}</td>
+                                    <td>{{ $employee->email }}</td>
+                                </tr>
+                            @endforeach
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    @endif
+
 
 @endsection
 
@@ -172,15 +210,15 @@
             }, //End of data
             success: function(response) {
                 //   console.log(response);
-
+                $('#mtype').attr('class', 'btn btn-success');
                 $('#ajax_messages').append('<ol><li><h4>' + response
                     .success +
                     '</h4></li></ol>');
                 $('#modal').modal('show');
                 setTimeout(function() { // wait for 7 mili secs(2)
-                   // $("#cform")[0].reset();
+                    $("#cform")[0].reset();
 
-                  //  location.reload(); // then reload the page.(3)
+                    location.reload(); // then reload the page.(3)
                 }, 700);
 
 
