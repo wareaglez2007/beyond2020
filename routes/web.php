@@ -20,6 +20,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/apps', 'HomeController@ApplicationView')->name('apps');
+Route::get('/groups', 'HomeController@Groups')->name('groups');
+Route::get('/employees', 'HomeController@Employees')->name('employees');
+Route::get('/employees/edit/{id}', 'HomeController@EditEmployee')->name('employees.edit');
+Route::post('/employee/edit/ajax', 'HomeController@AssignEmployee');
+Route::post('/employee/activate', 'HomeController@ActivateEmployee');
 
 /**
  * DATA SEEDER SECTION
