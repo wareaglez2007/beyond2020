@@ -98,27 +98,23 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Make</th>
-                                <th scope="col">Model</th>
+                                <th scope="col">Make/Model</th>
                                 <th scope="col">OS</th>
                                 <th scope="col">Serial#</th>
                                 <th scope="col">Device Name</th>
-                                <th scope="col">Status</th>
+                                <th scope="col" >Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($devices as $device)
                                 <tr>
-                                    <th scope="row">{{ $device->id }}</th>
-                                    <td>{{ strtoupper($device->make) }}</td>
-                                    <td>{{ $device->model }}</td>
+                                    <td>{{ strtoupper($device->make) }}/{{ $device->model }}</td>
                                     <td>{{ $device->OS }}</td>
-                                    <td>{{ $device->serial_number }}</td>
+                                    <td>{{ $device->serial_number}}</td>
                                     <td>{{ $device->Device_name }}</td>
                                     <td>{!! $device->active == 0 ? '<span class="badge bg-danger"
-                                            style="color:#fff;">inactive</span>' : '<span class="badge bg-success"
-                                            style="color:#fff;">active</span>' !!}</td>
+                                            style="color:#fff;">Unassigned</span>' : '<span class="badge bg-success"
+                                            style="color:#fff;">Assigned</span>' !!}</td>
                                 </tr>
                             @endforeach
                         </tbody>

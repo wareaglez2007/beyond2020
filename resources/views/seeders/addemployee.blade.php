@@ -166,82 +166,82 @@
             </div>
         </div>
     @endif
+    <script>
+        function CreateNewEmployeeAjax() {
+            $('#ajax_messages ol').remove();
+            //Post requests
+            var name = $('#name').val();
+            var m_name = $('#m_name').val();
+            var l_name = $('#l_name').val();
+            var email = $('#email').val();
+            var work_number = $('#work_number ').val();
+            var office = $('#office').val();
+            var address1 = $('#address1').val();
+            var address2 = $('#address2').val();
+            var city = $('#city').val();
+            var state = $('#state').val();
+            var zip = $('#zip').val();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                        'content')
+                }
+            }); //End of AjaxSetup
+            $.ajax({
+                url: "/seeder/adduser/employeenewseed",
+                method: "post",
+                data: {
+                    name: name,
+                    m_name: m_name,
+                    l_name: l_name,
+                    email: email,
+                    work_number: work_number,
+                    office: office,
+                    address1: address1,
+                    addrss2: address2,
+                    city: city,
+                    state: state,
+                    zip: zip,
 
+                }, //End of data
+                success: function(response) {
+                    //   console.log(response);
+                    $('#mtype').attr('class', 'btn btn-success');
+                    $('#ajax_messages').append('<ol><li><h4>' + response
+                        .success +
+                        '</h4></li></ol>');
+                    $('#modal').modal('show');
+                    setTimeout(function() { // wait for 7 mili secs(2)
+                        $("#cform")[0].reset();
+
+                        location.reload(); // then reload the page.(3)
+                    }, 700);
+
+
+
+                }, //end of respnse
+                error: function(error) {
+                    $('#mtype').attr('class',
+                        'btn btn-danger');
+                    $('#ajax_messages').append('<ol>');
+                    for (var prop in error.responseJSON.errors) {
+                        var item = error.responseJSON.errors[prop];
+                        $('#ajax_messages ol').append('<li><h4>' + item +
+                            '</h4></li>');
+                        //
+                        // console.log(item);
+                    }
+                    $('#modal').modal('show')
+
+                }
+
+            }); //End of Ajax Call
+
+
+        }
+
+    </script>
 
 @endsection
 
-<script>
-    function CreateNewEmployeeAjax() {
-        $('#ajax_messages ol').remove();
-        //Post requests
-        var name = $('#name').val();
-        var m_name = $('#m_name').val();
-        var l_name = $('#l_name').val();
-        var email = $('#email').val();
-        var work_number = $('#work_number ').val();
-        var office = $('#office').val();
-        var address1 = $('#address1').val();
-        var address2 = $('#address2').val();
-        var city = $('#city').val();
-        var state = $('#state').val();
-        var zip = $('#zip').val();
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                    'content')
-            }
-        }); //End of AjaxSetup
-        $.ajax({
-            url: "/seeder/adduser/employeenewseed",
-            method: "post",
-            data: {
-                name: name,
-                m_name: m_name,
-                l_name: l_name,
-                email: email,
-                work_number: work_number,
-                office: office,
-                address1: address1,
-                addrss2: address2,
-                city: city,
-                state: state,
-                zip: zip,
 
-            }, //End of data
-            success: function(response) {
-                //   console.log(response);
-                $('#mtype').attr('class', 'btn btn-success');
-                $('#ajax_messages').append('<ol><li><h4>' + response
-                    .success +
-                    '</h4></li></ol>');
-                $('#modal').modal('show');
-                setTimeout(function() { // wait for 7 mili secs(2)
-                    $("#cform")[0].reset();
-
-                    location.reload(); // then reload the page.(3)
-                }, 700);
-
-
-
-            }, //end of respnse
-            error: function(error) {
-                $('#mtype').attr('class',
-                    'btn btn-danger');
-                $('#ajax_messages').append('<ol>');
-                for (var prop in error.responseJSON.errors) {
-                    var item = error.responseJSON.errors[prop];
-                    $('#ajax_messages ol').append('<li><h4>' + item +
-                        '</h4></li>');
-                    //
-                    // console.log(item);
-                }
-                $('#modal').modal('show')
-
-            }
-
-        }); //End of Ajax Call
-
-
-    }
-
-</script>

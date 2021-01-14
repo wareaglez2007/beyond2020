@@ -37,6 +37,8 @@ Route::post('/seeder/adduser/employeenewseed', 'SampleDataController@AddEmployee
 
 
 Route::get('/seeder/adddevices', 'SampleDataController@AddDevices')->name('seeder.adddevices');
+Route::post('/seeder/adddevices/devicenewseed', 'SampleDataController@AddDevicesNewSeed');
+
 Route::get('/seeder/addroles', 'SampleDataController@AddRoles')->name('seeder.addroles');
 Route::get('/seeder/addgroups', 'SampleDataController@AddGroups')->name('seeder.addgroups');
 Route::get('/seeder/addapps', 'SampleDataController@AddApplications')->name('seeder.addapps');

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\employees;
-use App\employee_roles;
 use App\devices;
 use App\groups;
 use App\applications;
@@ -27,14 +26,36 @@ class SampleDataController extends Controller
     //Add new Divces
     public function AddDevices(devices $devices, Request $request)
     {
+
+
         return view('seeders.addnewdevice');
+    }
+
+    public function AddDevicesNewSeed(devices $devices, Request $request)
+    {
+        $validatedData = $request->validate([
+            'make' => ['required', 'max:50'],
+            'model' => ['required', 'max:50'],
+            'serial_number' => ['required', 'unique:devices', 'max:500'],
+            'Device_name' => ['required', 'unique:devices'],
+        ]);
+        $devices->make = $request->make;
+        $devices->model = $request->model;
+        $devices->year = $request->year;
+        $devices->OS = $request->OS;
+        $devices->serial_number = $request->serial_number;
+        $devices->Device_name = $request->Device_name;
+        $devices->save();
+        $success_message = "Device " . request('Device_name') . " has been added to inventory.";
+
+        return response()->json(['success' => $success_message]);
     }
     //Add new Employees
     public function AddEmployees(employees $employees)
     {
         $emp_count = $employees->count();
         $employees_data = $employees->all();
-        return view('seeders.addemployee', ['emp_count'=> $emp_count,'employee_data' => $employees_data]);
+        return view('seeders.addemployee', ['emp_count' => $emp_count, 'employee_data' => $employees_data]);
     }
     //AJAX call to store the new employee seed
     public function AddEmployeesNewSeed(employees $employees, Request $request)
@@ -71,7 +92,7 @@ class SampleDataController extends Controller
 
         //if ($request->ajax()) {
 
-          //  return view('seeders.addemployee', ['success' => $success_message])->render();
+        //  return view('seeders.addemployee', ['success' => $success_message])->render();
         //}
 
 
@@ -79,7 +100,7 @@ class SampleDataController extends Controller
     }
 
     //ADD ROLES
-    public function AddRoles(employee_roles $employee_roles, Request $request)
+    public function AddRoles()
     {
         return view('seeders.addroles');
     }
