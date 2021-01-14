@@ -280,11 +280,11 @@
                         .success +
                         '</h4></li></ol>');
                     $('#modal').modal('show');
-                    // setTimeout(function() { // wait for 7 mili secs(2)
-                    // $("#cform")[0].reset();
+                    setTimeout(function() { // wait for 7 mili secs(2)
+                        // $("#cform")[0].reset();
 
-                    //  location.reload(); // then reload the page.(3)
-                    //   }, 700);
+                        location.reload(); // then reload the page.(3)
+                    }, 700);
 
 
 
