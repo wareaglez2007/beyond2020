@@ -151,9 +151,25 @@ class HomeController extends Controller
 
             //get old device id
             $old_device = $employees_devices->where('employees_id', $request->id)->first();
-            if ($old_device->devices_id != $request->device) {
-                //deactivate the old device
-                $devices->where('id', $old_device->devices_id)->update(['active' => 0]);
+            if ($old_device != NULL) {
+                if ($old_device->devices_id != $request->device) {
+                    //deactivate the old device
+                    $devices->where('id', $old_device->devices_id)->update(['active' => 0]);
+                    //Before entering the new device check if it iis already assigned
+                    $d_count = $employees_devices->where('devices_id', $request->device)->count();
+
+                    $errors = "Cannot assign this device because it has been already assigned";
+                    if ($d_count > 0) {
+                        return response()->json(['error' => $errors], 422);
+                    }
+                    $employees_devices->where('employees_id', $request->id)->forceDelete();
+                    $employees_devices->employees_id = $request->id;
+                    $employees_devices->devices_id = $request->device;
+                    $employees_devices->save();
+                    //Update the last entry
+                    $devices->where('id', $request->device)->update(['active' => 1]);
+                }
+            } else {
                 //Before entering the new device check if it iis already assigned
                 $d_count = $employees_devices->where('devices_id', $request->device)->count();
 
@@ -168,6 +184,7 @@ class HomeController extends Controller
                 //Update the last entry
                 $devices->where('id', $request->device)->update(['active' => 1]);
             }
+
 
 
             $success_message = "User has been updated";
