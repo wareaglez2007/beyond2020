@@ -155,18 +155,24 @@
                         </div>
                     </div>
                     <!--DEVICE TO ASSIGN-->
+
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label for="">Device</label><br />
                                 <select class="form-control btn-group btn-group-sm" name="device" id="device">
-                                    <option value="0">--Select--</option>
+                                    <option value="0">--None--</option>
                                     @foreach ($devices as $device)
-                                        <option value="{{ $device->id }}" @foreach ($assigned_device as $a_device)
-                                            @if ($a_device->pivot->devices_id == $device->id)
-                                                {{ $selected = 'selected' }}
-                                            @endif
-                                    @endforeach>{{ $device->make }} - {{ $device->model }}
+                                        <option value="{{ $device->id }}" @if (count($assigned_device) != 0)
+                                            @foreach ($assigned_device as $a_device)
+
+                                                @if ($a_device->pivot->devices_id == $device->id)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+
+                                            @endforeach
+                                    @endif
+                                    >{{ $device->make }} - {{ $device->model }}
                                     Serial#
                                     {{ $device->serial_number }}
                                     </option>
